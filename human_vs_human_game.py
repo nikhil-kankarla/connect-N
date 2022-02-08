@@ -1,10 +1,3 @@
-###### Play game:
-# start_board = Board()
-# start_state = State(start_board)
-# start_node = Node(start_state)
-# start_tree = Tree(start_node)
-# start_mcts = MCTS(start_tree)
-
 import numpy as np
 from classes.board import Board
 from config import (

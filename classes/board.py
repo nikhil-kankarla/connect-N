@@ -57,13 +57,14 @@ class Board:
 
         return game_num
     
+
     def print_match_outcome(self, games):
         print('Ending match')
         print(f'Player 1 won: {len([result for result in games.values() if result == PLAYER_1_WIN_STATUS])} games')
         print(f'Player 2 won: {len([result for result in games.values() if result == PLAYER_2_WIN_STATUS])} games')
         print(f'Draws: {len([result for result in games.values() if result == DRAW_STATUS])} games')
-
-
+    
+    
     def check_input_is_valid_format(self, move_input: str):
         
         move_row_indx, move_column_indx = None, None
