@@ -24,7 +24,7 @@ class Board:
         , columns = COLUMNS
         , num_consecutive_for_win = NUM_CONSECUTIVE_FOR_WIN
         , board_positions = None
-        , player_to_act = None
+        , player_to_act = PLAYER_1
         , win_combos = WIN_COMBOS
     ):
         self.rows = rows

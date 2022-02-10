@@ -17,7 +17,7 @@ class Node:
     
     def add_child_nodes(self):
         if not self.node_is_terminal():
-            _, available_board_positions = self.state.get_available_moves()
+            available_board_positions = self.state.get_available_board_positions()
             for available_board_position in available_board_positions:
                 self.child_nodes.append(
                     State(
