@@ -24,8 +24,18 @@ class TestBoard:
     
     
     opponent_test_cases = [
-        pytest.param(Board(player_to_act = PLAYER_1), PLAYER_2)
-        , pytest.param(Board(player_to_act = PLAYER_2), PLAYER_1)
+        pytest.param(default_board, PLAYER_2)
+        , pytest.param(
+            Board(
+                rows = default_rows
+                , columns = default_columns
+                , num_consecutive_for_win = default_num_consecutive_for_win
+                , board_positions = default_board_positions
+                , player_to_act = PLAYER_2
+                , win_combos = default_win_combos
+            )
+            , PLAYER_1
+        )
     ]
     @pytest.mark.parametrize('inp, expected', opponent_test_cases) 
     def test_opponent(self, inp, expected):
@@ -33,8 +43,17 @@ class TestBoard:
     
     
     new_game_bool_test_cases = [
-        pytest.param(Board(board_positions = np.array([[0, 0, 0], [0, 0, 0], [0, 0, 0]])), True)
-        , pytest.param(Board(board_positions = np.array([[0, 0, 1], [0, 0, 0], [0, 0, 0]])), False)
+        pytest.param(default_board, True)
+        , pytest.param(
+            Board(
+                rows = default_rows
+                , columns = default_columns
+                , num_consecutive_for_win = default_num_consecutive_for_win
+                , board_positions = np.array([[0, 0, 1], [0, 0, 0], [0, 0, 0]])
+                , win_combos = default_win_combos
+            )
+            , False
+        )
     ]
     @pytest.mark.parametrize('inp, expected', new_game_bool_test_cases)
     def test_new_game_bool(self, inp, expected):
@@ -72,15 +91,33 @@ class TestBoard:
             , [(0,0), (0,1), (0,2), (1,0), (1,1), (1,2), (2,0), (2,1), (2,2)]
         )
         , pytest.param(
-            Board(board_positions = np.array(([1,0,0], [0,0,0], [0,0,0])))
+            Board(
+                rows = default_rows
+                , columns = default_columns
+                , num_consecutive_for_win = default_num_consecutive_for_win
+                , board_positions = np.array(([1,0,0], [0,0,0], [0,0,0]))
+                , win_combos = default_win_combos
+            )
             , [(0,1), (0,2), (1,0), (1,1), (1,2), (2,0), (2,1), (2,2)]
         )
         , pytest.param(
-            Board(board_positions = np.array(([0,0,0], [0,0,0], [0,0,-1])))
+            Board(
+                rows = default_rows
+                , columns = default_columns
+                , num_consecutive_for_win = default_num_consecutive_for_win
+                , board_positions = np.array(([0,0,0], [0,0,0], [0,0,-1]))
+                , win_combos = default_win_combos
+            )
             , [(0,0), (0,1), (0,2), (1,0), (1,1), (1,2), (2,0), (2,1)]
         )
         , pytest.param(
-            Board(board_positions = np.array(([1,0,0], [0,0,0], [0,0,-1])))
+            Board(
+                rows = default_rows
+                , columns = default_columns
+                , num_consecutive_for_win = default_num_consecutive_for_win
+                , board_positions = np.array(([1,0,0], [0,0,0], [0,0,-1]))
+                , win_combos = default_win_combos
+            )
             , [(0,1), (0,2), (1,0), (1,1), (1,2), (2,0), (2,1)]
         )
     ]
@@ -103,7 +140,7 @@ class TestBoard:
     def test_move_is_valid(self, inp, expected):
         self.default_board.check_move_is_valid(inp) == expected
     
-
+    
     play_move_test_cases = [
         pytest.param(
             default_board
@@ -137,44 +174,78 @@ class TestBoard:
     
     game_status_test_cases = [
         pytest.param(
-            Board(board_positions = np.array([[1,0,-1], [-1,0,1], [1,0,-1]]))
+            Board(
+                rows = default_rows
+                , columns = default_columns
+                , num_consecutive_for_win = default_num_consecutive_for_win
+                , board_positions = np.array([[1,0,-1], [-1,0,1], [1,0,-1]])
+                , win_combos = default_win_combos
+            )
             , ONGOING_GAME_STATUS
         )
         , pytest.param(
             Board(
-                board_positions = np.array(
+                rows = default_rows
+                , columns = default_columns
+                , num_consecutive_for_win = default_num_consecutive_for_win
+                , board_positions = np.array(
                     [
                         [PLAYERS[PLAYER_1][BOARD_VALUE],PLAYERS[PLAYER_1][BOARD_VALUE],PLAYERS[PLAYER_1][BOARD_VALUE]]
                         , [0,0,0]
                         , [0,0,0]
                     ]
                 )
+                , win_combos = default_win_combos
             )
             , PLAYER_1_WIN_STATUS
         )
         , pytest.param(
             Board(
-                board_positions = np.array(
+                rows = default_rows
+                , columns = default_columns
+                , num_consecutive_for_win = default_num_consecutive_for_win
+                , board_positions = np.array(
                     [
                         [PLAYERS[PLAYER_2][BOARD_VALUE],PLAYERS[PLAYER_2][BOARD_VALUE],PLAYERS[PLAYER_2][BOARD_VALUE]]
                         , [0,0,0]
                         , [0,0,0]
                     ]
                 )
+                , win_combos = default_win_combos
             )
             , PLAYER_2_WIN_STATUS
         )
         , pytest.param(
             Board(
-                board_positions = np.array(
+                rows = default_rows
+                , columns = default_columns
+                , num_consecutive_for_win = default_num_consecutive_for_win
+                , board_positions = np.array(
                     [
                         [PLAYERS[PLAYER_1][BOARD_VALUE],PLAYERS[PLAYER_2][BOARD_VALUE],PLAYERS[PLAYER_1][BOARD_VALUE]]
                         , [PLAYERS[PLAYER_2][BOARD_VALUE],PLAYERS[PLAYER_2][BOARD_VALUE],PLAYERS[PLAYER_1][BOARD_VALUE]]
                         , [PLAYERS[PLAYER_1][BOARD_VALUE],PLAYERS[PLAYER_1][BOARD_VALUE],PLAYERS[PLAYER_2][BOARD_VALUE]]
                     ]
                 )
+                , win_combos = default_win_combos
             )
             , DRAW_STATUS
+        )
+        , pytest.param(
+            Board(
+                rows = default_rows
+                , columns = default_columns
+                , num_consecutive_for_win = default_num_consecutive_for_win
+                , board_positions = np.array(
+                    [
+                        [PLAYERS[PLAYER_1][BOARD_VALUE],PLAYERS[PLAYER_2][BOARD_VALUE],PLAYERS[PLAYER_1][BOARD_VALUE]]
+                        , [PLAYERS[PLAYER_1][BOARD_VALUE],PLAYERS[PLAYER_1][BOARD_VALUE],PLAYERS[PLAYER_2][BOARD_VALUE]]
+                        , [PLAYERS[PLAYER_1][BOARD_VALUE],PLAYERS[PLAYER_2][BOARD_VALUE],PLAYERS[PLAYER_2][BOARD_VALUE]]
+                    ]
+                )
+                , win_combos = default_win_combos
+            )
+            , PLAYER_1_WIN_STATUS
         )
     ]
     @pytest.mark.parametrize('input_board, expected_game_status', game_status_test_cases)

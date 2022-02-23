@@ -61,9 +61,9 @@ class Board:
     def print_match_outcome(self, games):
         print('')
         print('Ending match')
-        print(f'Player 1 won: {len([result for result in games.values() if result == PLAYER_1_WIN_STATUS])} games')
-        print(f'Player 2 won: {len([result for result in games.values() if result == PLAYER_2_WIN_STATUS])} games')
-        print(f'Draws: {len([result for result in games.values() if result == DRAW_STATUS])} games\n')
+        print(f'Player 1 won: {len([result for result in games.values() if result == PLAYER_1_WIN_STATUS])} game(s)')
+        print(f'Player 2 won: {len([result for result in games.values() if result == PLAYER_2_WIN_STATUS])} game(s)')
+        print(f'Draws       : {len([result for result in games.values() if result == DRAW_STATUS])} games\n')
     
     
     def check_input_is_valid_format(self, move_input: str):
@@ -132,25 +132,24 @@ class Board:
         
         if len(np.where(self.board_positions == 0)[0]) == 0: positions_still_available = False
         else: positions_still_available = True
-
+        
+        player_to_act_positions = list(zip(*[x.tolist() for x in np.where(self.board_positions == PLAYERS[player_to_act][BOARD_VALUE])]))
+        opponent_positions = list(zip(*[x.tolist() for x in np.where(self.board_positions == PLAYERS[opponent][BOARD_VALUE])]))
+        
+        for win_combo in self.win_combos:
+            if set(win_combo).issubset(player_to_act_positions):
+                if player_to_act == PLAYER_1:
+                    return PLAYER_1_WIN_STATUS
+                else:
+                    return PLAYER_2_WIN_STATUS
+            elif set(win_combo).issubset(opponent_positions):
+                if opponent == PLAYER_1:
+                    return PLAYER_1_WIN_STATUS
+                else:
+                    return PLAYER_2_WIN_STATUS
+        
         if positions_still_available:
-            player_to_act_positions = list(zip(*[x.tolist() for x in np.where(self.board_positions == PLAYERS[player_to_act][BOARD_VALUE])]))
-            opponent_positions = list(zip(*[x.tolist() for x in np.where(self.board_positions == PLAYERS[opponent][BOARD_VALUE])]))
-            
-            for win_combo in self.win_combos:
-                if set(win_combo).issubset(player_to_act_positions):
-                    if player_to_act == PLAYER_1:
-                        return PLAYER_1_WIN_STATUS
-                    else:
-                        return PLAYER_2_WIN_STATUS
-                elif set(win_combo).issubset(opponent_positions):
-                    if opponent == PLAYER_1:
-                        return PLAYER_1_WIN_STATUS
-                    else:
-                        return PLAYER_2_WIN_STATUS
-            
             return ONGOING_GAME_STATUS
-            
         else:
             return DRAW_STATUS
 
