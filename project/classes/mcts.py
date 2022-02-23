@@ -44,8 +44,8 @@ class Mcts:
             current_time = time.time()
         
         best_child = self.select_best_child()
-        for c in self.root_node.child_nodes:
-            print(c.state.board, c.state.num_wins, c.state.num_visits, c.calculate_ucb())
+        # for c in self.root_node.child_nodes:
+        #     print(c.state.board, c.state.num_wins, c.state.num_visits, c.calculate_ucb())
         move = self.convert_best_child_to_move(best_child)
         return move
     
