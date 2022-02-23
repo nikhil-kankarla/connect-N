@@ -1,4 +1,3 @@
-from math import sqrt
 from project.win_combos import get_win_combos
 
 # Game size
@@ -13,6 +12,7 @@ PLAYER_NUM = 'player_num'
 BOARD_VALUE = 'board_value'
 BOARD_STR = 'board_string'
 OPPONENT = 'opponent'
+WIN_STATUS = 'win_status'
 PLAYERS = {
     PLAYER_1: {
         PLAYER_NUM: 1
@@ -30,16 +30,21 @@ PLAYERS = {
 MCTS_PLAYER = PLAYER_2
 
 # Gameplay input settings
-MAX_INPUT_ATTEMPTS = 3
-
-# Game status settings
-PLAYER_1_WIN_STATUS = PLAYERS[PLAYER_1][BOARD_VALUE]
-PLAYER_2_WIN_STATUS = PLAYERS[PLAYER_2][BOARD_VALUE]
-DRAW_STATUS = 0
-ONGOING_GAME_STATUS = 9
+MAX_INPUT_ATTEMPTS = 3 # number of times human is allowed to specify an invalid move before the game is shut down
 
 # Monte-Carlo Tree Search settings
-EXPLORATION_CONSTANT = sqrt(2)
+EXPLORATION_CONSTANT = 2
+
+# Game status settings
+# ! Do not change
+PLAYER_1_WIN_STATUS = PLAYERS[PLAYER_1][BOARD_VALUE] # shouldn't be equal to player_2_win_status, draw_status nor ongoing_game_status
+PLAYER_2_WIN_STATUS = PLAYERS[PLAYER_2][BOARD_VALUE] # # shouldn't be equal to player_1_win_status, draw_status nor ongoing_game_status
+DRAW_STATUS = 0 # shouldn't be equal to player_1_win_status, player_2_win_status nor ongoing_game_status
+ONGOING_GAME_STATUS = 9 # shouldn't be equal to player_1_win_status, player_2_win_status nor draw_status
 
 # Winning combinations of board positions
 WIN_COMBOS = get_win_combos(rows = ROWS, columns = COLUMNS, num_consecutive_for_win = NUM_CONSECUTIVE_FOR_WIN)
+
+# derived inputs
+PLAYERS[PLAYER_1][WIN_STATUS] = PLAYER_1_WIN_STATUS
+PLAYERS[PLAYER_2][WIN_STATUS] = PLAYER_2_WIN_STATUS
