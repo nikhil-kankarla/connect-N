@@ -1,3 +1,5 @@
+![Pytest suite](https://github.com/nikhil-kankarla/connect-N/actions/workflows/python-app.yml/badge.svg)
+
 # Connect-N
 An extended version of the Tic-Tac-Toe game. Connect N cells in a row to win the game. 
 
