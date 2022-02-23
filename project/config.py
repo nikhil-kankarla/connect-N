@@ -31,6 +31,8 @@ MCTS_PLAYER = PLAYER_2
 
 # Gameplay input settings
 MAX_INPUT_ATTEMPTS = 3 # number of times human is allowed to specify an invalid move before the game is shut down
+MCTS_DECISION_TIME = 1 # in seconds
+MIN_MCTS_SIMULATIONS = 20000
 
 # Monte-Carlo Tree Search settings
 EXPLORATION_CONSTANT = 2
